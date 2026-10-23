@@ -1,0 +1,92 @@
+table dim_product
+	lineageTag: 8edea697-7c53-58a2-9167-27272dbfe8ad
+
+	column product_id
+		dataType: string
+		lineageTag: e3ba0980-b5c6-59f1-83c6-8eccfbe6ed44
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_name
+		dataType: string
+		lineageTag: 9d30d727-0e30-5856-96fc-ddf54f8ba94b
+		summarizeBy: none
+		sourceColumn: product_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_category
+		dataType: string
+		lineageTag: b3bf7084-0435-5462-b158-965884d9de12
+		summarizeBy: none
+		sourceColumn: product_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_subcategory
+		dataType: string
+		lineageTag: 4aeab661-eb28-5ea4-96e4-7ebfec200649
+		summarizeBy: none
+		sourceColumn: product_subcategory
+
+		annotation SummarizationSetBy = Automatic
+
+	column brand
+		dataType: string
+		lineageTag: 970ace91-98e7-550e-a1f3-bd3725b9d91f
+		summarizeBy: none
+		sourceColumn: brand
+
+		annotation SummarizationSetBy = Automatic
+
+	column supplier
+		dataType: string
+		lineageTag: 4f5f5419-eb65-5451-8e45-2c5ccf6f0e82
+		summarizeBy: none
+		sourceColumn: supplier
+
+		annotation SummarizationSetBy = Automatic
+
+	column list_unit_price
+		dataType: double
+		formatString: #,0.00
+		lineageTag: ef0442c9-3f25-593b-947c-9d5f6a51776e
+		summarizeBy: none
+		sourceColumn: list_unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+	column standard_cost
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 3b1ff5d0-b7d5-557e-bb23-36af276ddc35
+		summarizeBy: none
+		sourceColumn: standard_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_rating
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 6f6cfe43-b49b-58fd-a7bf-61f492e2b5d3
+		summarizeBy: none
+		sourceColumn: product_rating
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_product = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\dim_product.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"product_id", type text}, {"product_name", type text}, {"product_category", type text}, {"product_subcategory", type text}, {"brand", type text}, {"supplier", type text}, {"list_unit_price", type number}, {"standard_cost", type number}, {"product_rating", type number}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

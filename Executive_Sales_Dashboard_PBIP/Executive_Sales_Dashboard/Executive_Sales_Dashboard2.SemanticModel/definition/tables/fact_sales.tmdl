@@ -1,0 +1,285 @@
+table fact_sales
+	lineageTag: ce4db89b-a8ca-5965-8ec4-410d682fa781
+
+	column order_item_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 63310d74-6425-530a-ad49-44189757a3d2
+		summarizeBy: none
+		sourceColumn: order_item_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_id
+		dataType: string
+		lineageTag: 3879cba8-0880-5bcc-8aa7-2727fa51089b
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_id
+		dataType: string
+		isHidden
+		lineageTag: 1cbe72d2-9374-5df8-96a4-7dbf38b023fb
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d166b1e-02b0-5df9-8d9e-eb0ce040b839
+		summarizeBy: none
+		sourceColumn: quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 89a0e16b-5b4c-58b4-a338-c3366db3a425
+		summarizeBy: none
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_percentage
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 522f795b-ae10-514f-add8-3c950c1bd98e
+		summarizeBy: none
+		sourceColumn: discount_percentage
+
+		annotation SummarizationSetBy = Automatic
+
+	column discount_amount
+		dataType: double
+		formatString: #,0.00
+		lineageTag: d5ca308a-72a6-569b-b8d9-6d2516363786
+		summarizeBy: none
+		sourceColumn: discount_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column gross_sales
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 461581bf-c9ef-5f44-979a-4983e7ddd554
+		summarizeBy: none
+		sourceColumn: gross_sales
+
+		annotation SummarizationSetBy = Automatic
+
+	column tax_amount
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 596dae9f-7a22-5d3f-8c20-5fdd5983da17
+		summarizeBy: none
+		sourceColumn: tax_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_cost
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 721acb73-6204-5084-89cb-d01b55a03e2a
+		summarizeBy: none
+		sourceColumn: shipping_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column net_sales
+		dataType: double
+		formatString: #,0.00
+		lineageTag: c3c3c0d9-7224-5701-be01-c7cbc82b8f75
+		summarizeBy: none
+		sourceColumn: net_sales
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_cost
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 1eed612c-1bd2-5b22-ac2c-d6e006587d57
+		summarizeBy: none
+		sourceColumn: product_cost
+
+		annotation SummarizationSetBy = Automatic
+
+	column profit
+		dataType: double
+		formatString: #,0.00
+		lineageTag: a8642c36-0ba0-580d-bd8c-481504148e0f
+		summarizeBy: none
+		sourceColumn: profit
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		isHidden
+		lineageTag: 9613040b-fe88-5990-a925-4612fc73014a
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 2a319966-b0ec-50f6-b1da-595e86b3f2c3
+		summarizeBy: none
+		sourceColumn: order_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_time
+		dataType: string
+		lineageTag: 8d4f69c1-8623-593f-9ce7-d1d8613ab769
+		summarizeBy: none
+		sourceColumn: order_time
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_status
+		dataType: string
+		lineageTag: f8063c8b-9d38-5b93-85ca-d4b038a9818d
+		summarizeBy: none
+		sourceColumn: order_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column sales_channel
+		dataType: string
+		lineageTag: f651832e-e51a-592a-990e-b356138d39d3
+		summarizeBy: none
+		sourceColumn: sales_channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_type
+		dataType: string
+		lineageTag: 01c96462-2cba-5a67-a1b7-f24565958db1
+		summarizeBy: none
+		sourceColumn: customer_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		lineageTag: a5d6f5e9-9598-5b23-bc93-46f66cfedb4a
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_status
+		dataType: string
+		lineageTag: 8fd89875-7a47-5e4d-8fee-6157d7b51907
+		summarizeBy: none
+		sourceColumn: payment_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column currency
+		dataType: string
+		lineageTag: 54883971-381c-56e9-bfd0-e44832d4ab5d
+		summarizeBy: none
+		sourceColumn: currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_method
+		dataType: string
+		lineageTag: e2032904-cade-5ffd-ac6c-94c0162679e4
+		summarizeBy: none
+		sourceColumn: shipping_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column warehouse
+		dataType: string
+		lineageTag: 25d84abe-b1ff-5e80-8184-0dcaf79a79ff
+		summarizeBy: none
+		sourceColumn: warehouse
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_status
+		dataType: string
+		lineageTag: c084b7cd-66a1-5a5f-9d85-1e008445dc52
+		summarizeBy: none
+		sourceColumn: delivery_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column return_status
+		dataType: string
+		lineageTag: e52d4a57-7be8-596e-8c0e-013f7ed2844b
+		summarizeBy: none
+		sourceColumn: return_status
+
+		annotation SummarizationSetBy = Automatic
+
+	column return_reason
+		dataType: string
+		lineageTag: bb7ab74b-c6d1-5483-9b61-4bbbdae40d9c
+		summarizeBy: none
+		sourceColumn: return_reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column marketing_channel
+		dataType: string
+		lineageTag: 27274605-dfdf-5d08-af5c-e5bf49fdab77
+		summarizeBy: none
+		sourceColumn: marketing_channel
+
+		annotation SummarizationSetBy = Automatic
+
+	column campaign_name
+		dataType: string
+		lineageTag: ed2f6dd0-930e-5325-860b-0e9dbb39d4f4
+		summarizeBy: none
+		sourceColumn: campaign_name
+
+		annotation SummarizationSetBy = Automatic
+
+	column coupon_code
+		dataType: string
+		lineageTag: c44a1748-1708-54c9-904a-0d5adc4a4280
+		summarizeBy: none
+		sourceColumn: coupon_code
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c9d1c874-e313-5d54-81c6-8c00a3bfb6df
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_sales = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\fact_sales.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"order_item_key", Int64.Type}, {"order_id", type text}, {"product_id", type text}, {"quantity", Int64.Type}, {"unit_price", type number}, {"discount_percentage", type number}, {"discount_amount", type number}, {"gross_sales", type number}, {"tax_amount", type number}, {"shipping_cost", type number}, {"net_sales", type number}, {"product_cost", type number}, {"profit", type number}, {"customer_id", type text}, {"order_date", type date}, {"order_time", type text}, {"order_status", type text}, {"sales_channel", type text}, {"customer_type", type text}, {"payment_method", type text}, {"payment_status", type text}, {"currency", type text}, {"shipping_method", type text}, {"warehouse", type text}, {"delivery_status", type text}, {"return_status", type text}, {"return_reason", type text}, {"marketing_channel", type text}, {"campaign_name", type text}, {"coupon_code", type text}, {"date_key", Int64.Type}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

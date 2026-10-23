@@ -1,0 +1,7 @@
+expression DataFolder = "C:\Users\shubh\Downloads\New folder" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 68411890-b8ee-5bbd-bd63-1be12f2b2310
+
+	annotation PBI_ResultType = Text
+
+	annotation PBI_NavigationStepName = Navigation
+

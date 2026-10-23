@@ -1,0 +1,422 @@
+table _Measures
+	lineageTag: 6401080e-cb4d-58b6-9f1d-675680428c2c
+
+	measure 'Total Sales' = SUM(fact_sales[net_sales])
+		formatString: $#,0
+		displayFolder: 1 Core
+		lineageTag: d0467235-cfdb-5217-9b6d-303cf7dcd22c
+
+	measure 'Gross Sales' = SUM(fact_sales[gross_sales])
+		formatString: $#,0
+		displayFolder: 1 Core
+		lineageTag: 7a7ef52a-b10f-5fc5-bf06-79772838b8bd
+
+	measure 'Total Discount' = SUM(fact_sales[discount_amount])
+		formatString: $#,0
+		displayFolder: 1 Core
+		lineageTag: 903df2df-6de8-5d17-b7f8-16c8180dffee
+
+	measure 'Total Profit' = SUM(fact_sales[profit])
+		formatString: $#,0
+		displayFolder: 1 Core
+		lineageTag: 5a8fafe6-3281-52fc-b0eb-b329c5e2b8b5
+
+	measure 'Units Sold' = SUM(fact_sales[quantity])
+		formatString: #,0
+		displayFolder: 1 Core
+		lineageTag: 7988b2d7-0b56-5afa-a140-14f15d00f241
+
+	measure 'Profit Margin %' = DIVIDE([Total Profit], [Total Sales])
+		formatString: 0.0%
+		displayFolder: 1 Core
+		lineageTag: a30de534-8066-53e5-b1a7-3a114575fa08
+
+	measure 'Discount %' = DIVIDE([Total Discount], [Gross Sales])
+		formatString: 0.0%
+		displayFolder: 1 Core
+		lineageTag: bd623b0f-1b48-51d5-8463-adb79d087375
+
+	measure 'Total Orders' = DISTINCTCOUNT(fact_sales[order_id])
+		formatString: #,0
+		displayFolder: 1 Core
+		lineageTag: d22950b0-b8cf-5cc7-8cc2-56a7b04c0093
+
+	measure 'Total Customers' = DISTINCTCOUNT(fact_orders[customer_id])
+		formatString: #,0
+		displayFolder: 1 Core
+		lineageTag: 966decd0-fb23-51dc-afeb-6bc21b298520
+
+	measure 'Avg Order Value' = DIVIDE([Total Sales], [Total Orders])
+		formatString: $#,0
+		displayFolder: 1 Core
+		lineageTag: fe2ef823-7748-525c-96c1-286edb37e971
+
+	measure 'Orders per Customer' = DIVIDE([Total Orders], [Total Customers])
+		formatString: 0.00
+		displayFolder: 1 Core
+		lineageTag: c83585fb-e042-5360-a374-4784da9d9b51
+
+	measure 'Selected Year Count' = CALCULATE(DISTINCTCOUNT(dim_date[year]), ALLSELECTED(dim_date))
+		formatString: 0
+		isHidden
+		displayFolder: 2 Time Intelligence
+		lineageTag: 4be0b3e8-5bd2-5fbe-861e-b3a67020d19f
+
+	measure 'Sales PY' =
+			IF(
+			    HASONEVALUE(dim_date[year]),
+			    CALCULATE([Total Sales], SAMEPERIODLASTYEAR(dim_date[date]))
+			)
+		formatString: $#,0
+		displayFolder: 2 Time Intelligence
+		lineageTag: b8d9f64e-77ac-562e-928e-adf3819f9360
+
+	measure 'Sales YoY %' = DIVIDE([Total Sales] - [Sales PY], [Sales PY])
+		formatString: 0.0%
+		displayFolder: 2 Time Intelligence
+		lineageTag: 43a2f2d1-b6f6-5990-8d98-4d748d286cf5
+
+	measure 'Sales PY (Trend)' = IF([Selected Year Count] = 1, [Sales PY])
+		formatString: $#,0
+		displayFolder: 2 Time Intelligence
+		lineageTag: 067299f0-2e75-5235-9589-a36a415b15c9
+
+	measure 'Profit PY' =
+			IF(
+			    HASONEVALUE(dim_date[year]),
+			    CALCULATE([Total Profit], SAMEPERIODLASTYEAR(dim_date[date]))
+			)
+		formatString: $#,0
+		displayFolder: 2 Time Intelligence
+		lineageTag: 5c40277a-b1b2-508b-baf7-0b923efe4f95
+
+	measure 'Profit YoY %' = DIVIDE([Total Profit] - [Profit PY], [Profit PY])
+		formatString: 0.0%
+		displayFolder: 2 Time Intelligence
+		lineageTag: 122d5426-1a1a-57f6-b1d3-04f8943f84a4
+
+	measure 'Orders PY' =
+			IF(
+			    HASONEVALUE(dim_date[year]),
+			    CALCULATE([Total Orders], SAMEPERIODLASTYEAR(dim_date[date]))
+			)
+		formatString: #,0
+		displayFolder: 2 Time Intelligence
+		lineageTag: 92d9827c-7d52-52b9-80ae-76fd70fb0d9a
+
+	measure 'Orders YoY %' = DIVIDE([Total Orders] - [Orders PY], [Orders PY])
+		formatString: 0.0%
+		displayFolder: 2 Time Intelligence
+		lineageTag: 1ecf633f-c923-5593-8c17-d09d8ddd5e99
+
+	measure 'Customers PY' =
+			IF(
+			    HASONEVALUE(dim_date[year]),
+			    CALCULATE([Total Customers], SAMEPERIODLASTYEAR(dim_date[date]))
+			)
+		formatString: #,0
+		displayFolder: 2 Time Intelligence
+		lineageTag: 771257fa-26b0-557f-a2c1-03d8d8a9eccb
+
+	measure 'Customers YoY %' = DIVIDE([Total Customers] - [Customers PY], [Customers PY])
+		formatString: 0.0%
+		displayFolder: 2 Time Intelligence
+		lineageTag: d81e36c8-4cf1-57bd-935b-6aab9a1ab079
+
+	measure 'Avg Order Value PY' =
+			IF(
+			    HASONEVALUE(dim_date[year]),
+			    CALCULATE([Avg Order Value], SAMEPERIODLASTYEAR(dim_date[date]))
+			)
+		formatString: $#,0
+		displayFolder: 2 Time Intelligence
+		lineageTag: 6d271108-7e1d-5bf4-9ec0-5ade11654802
+
+	measure 'Avg Order Value YoY %' = DIVIDE([Avg Order Value] - [Avg Order Value PY], [Avg Order Value PY])
+		formatString: 0.0%
+		displayFolder: 2 Time Intelligence
+		lineageTag: 4096d193-5d2e-5a01-876f-35e77ee0443f
+
+	measure 'Profit Margin PY' =
+			IF(
+			    HASONEVALUE(dim_date[year]),
+			    CALCULATE([Profit Margin %], SAMEPERIODLASTYEAR(dim_date[date]))
+			)
+		formatString: 0.0%
+		displayFolder: 2 Time Intelligence
+		lineageTag: 30ac22f2-57c0-5b34-9f4c-56b4d80c73c7
+
+	measure 'Profit Margin YoY %' = DIVIDE([Profit Margin %] - [Profit Margin PY], [Profit Margin PY])
+		formatString: 0.0%
+		displayFolder: 2 Time Intelligence
+		lineageTag: 42d9b1f6-d945-5a4b-a5ec-8b43fd3cd541
+
+	measure 'Sales YTD' = TOTALYTD([Total Sales], dim_date[date])
+		formatString: $#,0
+		displayFolder: 2 Time Intelligence
+		lineageTag: 69d31848-7e58-5c55-ba21-8eab642efd79
+
+	measure 'Sales MTD' = TOTALMTD([Total Sales], dim_date[date])
+		formatString: $#,0
+		displayFolder: 2 Time Intelligence
+		lineageTag: 4ab64a54-a415-55e3-a3a8-49701911128c
+
+	measure 'Product Rank' =
+			IF(
+			    ISINSCOPE(dim_product[product_name]),
+			    RANKX(ALL(dim_product[product_name]), [Total Sales], , DESC, Dense)
+			)
+		formatString: 0
+		displayFolder: 3 Product & Rankings
+		lineageTag: 3f8b13f9-ccee-5522-aa79-ffc963ca8466
+
+	measure 'Top 10 Product Sales' = IF([Product Rank] <= 10, [Total Sales])
+		formatString: $#,0
+		displayFolder: 3 Product & Rankings
+		lineageTag: 78e1c1da-13a7-5c8e-8bb3-ab43456b6fef
+
+	measure 'Sales % of Total' = DIVIDE([Total Sales], CALCULATE([Total Sales], ALLSELECTED()))
+		formatString: 0.0%
+		displayFolder: 3 Product & Rankings
+		lineageTag: 8cd913d8-ab69-5606-a650-ae8afe0373c9
+
+	measure 'Avg Product Rating' = AVERAGE(dim_product[product_rating])
+		formatString: 0.00
+		displayFolder: 3 Product & Rankings
+		lineageTag: f1287ad8-8b23-511c-bc95-5e4d357a8cfd
+
+	measure 'Subcategory Rank' =
+			IF(
+			    ISINSCOPE(dim_product[product_subcategory]),
+			    RANKX(ALL(dim_product[product_subcategory]), [Total Sales], , DESC, Dense)
+			)
+		formatString: 0
+		isHidden
+		displayFolder: 3 Product & Rankings
+		lineageTag: 4d657752-a9fc-53d6-b2f1-dd643b870225
+
+	measure 'Top 8 Subcategory Sales' = IF([Subcategory Rank] <= 8, [Total Sales])
+		formatString: $#,0
+		displayFolder: 3 Product & Rankings
+		lineageTag: d7760558-2163-5f38-b075-41ba9be3fcbe
+
+	measure 'Marketing Rank' =
+			IF(
+			    ISINSCOPE(fact_sales[marketing_channel]),
+			    RANKX(ALL(fact_sales[marketing_channel]), [Total Sales], , DESC, Dense)
+			)
+		formatString: 0
+		isHidden
+		displayFolder: 3 Product & Rankings
+		lineageTag: 664d2732-4e3a-5359-8638-a5d2bcb929c7
+
+	measure 'Top 8 Marketing Sales' = IF([Marketing Rank] <= 8, [Total Sales])
+		formatString: $#,0
+		displayFolder: 3 Product & Rankings
+		lineageTag: 11b00842-0dc4-5440-8a60-a3e2223f9c44
+
+	measure 'Country Rank' =
+			IF(
+			    ISINSCOPE(dim_customer[customer_country]),
+			    RANKX(ALL(dim_customer[customer_country]), [Total Sales], , DESC, Dense)
+			)
+		formatString: 0
+		isHidden
+		displayFolder: 3 Product & Rankings
+		lineageTag: 44892723-4bb6-54c1-a483-67f95529c7ba
+
+	measure 'Top 6 Country Sales' = IF([Country Rank] <= 6, [Total Sales])
+		formatString: $#,0
+		displayFolder: 3 Product & Rankings
+		lineageTag: 24e5376e-b6fa-57d7-a4cb-b6a557fab6eb
+
+	measure 'Avg Customer LTV' = AVERAGE(fact_orders[customer_lifetime_value])
+		formatString: $#,0
+		displayFolder: 4 Customer
+		lineageTag: 905da28a-47dd-53ac-91a9-cae8023e89ba
+
+	measure 'Repeat Order %' =
+			DIVIDE(
+			    CALCULATE(COUNTROWS(fact_orders), fact_orders[is_repeat_customer] = TRUE()),
+			    COUNTROWS(fact_orders)
+			)
+		formatString: 0.0%
+		displayFolder: 4 Customer
+		lineageTag: 0b22b216-4c17-5c5f-981a-a15459226e97
+
+	measure 'Avg CAC' = AVERAGE(dim_customer[customer_acquisition_cost])
+		formatString: $#,0.00
+		displayFolder: 4 Customer
+		lineageTag: 9ab2859b-b739-5a01-a4cd-9ed2fd5659ed
+
+	measure 'Loyalty Points Earned' = SUM(fact_orders[loyalty_points_earned])
+		formatString: #,0
+		displayFolder: 4 Customer
+		lineageTag: bb1ce6e3-8690-5bdd-85c2-a5452cdc6e6b
+
+	measure 'Loyalty Points Redeemed' = SUM(fact_orders[loyalty_points_redeemed])
+		formatString: #,0
+		displayFolder: 4 Customer
+		lineageTag: f6c8675f-ad62-54fb-9d9d-4c4b72f26ae4
+
+	measure 'Loyalty Redemption %' = DIVIDE([Loyalty Points Redeemed], [Loyalty Points Earned])
+		formatString: 0.0%
+		displayFolder: 4 Customer
+		lineageTag: 1ed506cd-fdaf-5ae5-b39b-781c15db3ddf
+
+	measure 'Returned Orders' = CALCULATE(DISTINCTCOUNT(fact_sales[order_id]), fact_sales[order_status] = "Returned")
+		formatString: #,0
+		displayFolder: 5 Operations
+		lineageTag: 974aca55-81e1-5285-a3ab-3d7b055cddbe
+
+	measure 'Cancelled Orders' = CALCULATE(DISTINCTCOUNT(fact_sales[order_id]), fact_sales[order_status] = "Cancelled")
+		formatString: #,0
+		displayFolder: 5 Operations
+		lineageTag: a39d9bd1-d208-5c2d-b7c3-2a898242e61c
+
+	measure 'Return Rate %' = DIVIDE([Returned Orders], [Total Orders])
+		formatString: 0.0%
+		displayFolder: 5 Operations
+		lineageTag: 654dc69f-009b-5cc3-82c6-d9efe5fcda32
+
+	measure 'Cancellation Rate %' = DIVIDE([Cancelled Orders], [Total Orders])
+		formatString: 0.0%
+		displayFolder: 5 Operations
+		lineageTag: c8b25d77-270d-5c07-ad06-b62b3e14e069
+
+	measure 'Delivered Orders' =
+			CALCULATE(
+			    DISTINCTCOUNT(fact_sales[order_id]),
+			    fact_sales[delivery_status] IN {"On Time", "Early", "Delayed"}
+			)
+		formatString: #,0
+		displayFolder: 5 Operations
+		lineageTag: 988ed877-cec4-5bc4-a5b0-ee09418f6c1e
+
+	measure 'On-Time Orders' =
+			CALCULATE(
+			    DISTINCTCOUNT(fact_sales[order_id]),
+			    fact_sales[delivery_status] IN {"On Time", "Early"}
+			)
+		formatString: #,0
+		displayFolder: 5 Operations
+		lineageTag: 8afd228e-eb77-5e2a-b414-ff39bbb53726
+
+	measure 'On-Time Delivery %' = DIVIDE([On-Time Orders], [Delivered Orders])
+		formatString: 0.0%
+		displayFolder: 5 Operations
+		lineageTag: 0c4397fb-0432-53d1-8136-0438a61ec1e8
+
+	measure 'On-Time Target' = 0.9
+		formatString: 0.0%
+		displayFolder: 5 Operations
+		lineageTag: 6be788a2-b7bb-5331-9a69-8bca733376ea
+
+	measure 'Avg Customer Rating' = AVERAGE(fact_orders[customer_rating])
+		formatString: 0.00
+		displayFolder: 5 Operations
+		lineageTag: 65fe880d-72ba-5d26-a9b6-c27aef6a48ce
+
+	measure 'Positive Review %' =
+			DIVIDE(
+			    CALCULATE(COUNTROWS(fact_orders), fact_orders[review_sentiment] = "Positive"),
+			    CALCULATE(COUNTROWS(fact_orders), fact_orders[review_sentiment] <> "No Review")
+			)
+		formatString: 0.0%
+		displayFolder: 5 Operations
+		lineageTag: 08f62fb7-a873-5bcf-bdb7-e31be1699e70
+
+	measure 'Avg Delivery Days' = AVERAGE(fact_orders[delivery_days])
+		formatString: 0.0
+		displayFolder: 5 Operations
+		lineageTag: bb3934af-0fac-57a7-a2b2-18e89b0e68cf
+
+	measure 'Paid Order %' =
+			DIVIDE(
+			    CALCULATE(DISTINCTCOUNT(fact_sales[order_id]), fact_sales[payment_status] = "Paid"),
+			    [Total Orders]
+			)
+		formatString: 0.0%
+		displayFolder: 5 Operations
+		lineageTag: 74404299-e8b0-5e4c-b430-c1d4e1504a12
+
+	measure 'YoY Color' = IF(ISBLANK([Sales YoY %]), "#6B7280", IF([Sales YoY %] >= 0, "#2E8B57", "#D64545"))
+		displayFolder: 6 Formatting Helpers
+		lineageTag: 601fdeb1-fc89-5b1b-ad06-49a9624b2bd6
+
+	measure 'Sales YoY Label' =
+			IF(ISBLANK([Sales YoY %]), "—",
+			    IF([Sales YoY %] >= 0, "▲ ", "▼ ") & FORMAT(ABS([Sales YoY %]), "0.0%") & " vs PY")
+		displayFolder: 6 Formatting Helpers
+		lineageTag: 2cdb8f56-776e-5d46-972b-73160d2f4c19
+
+	measure 'Profit YoY Color' = IF(ISBLANK([Profit YoY %]), "#6B7280", IF([Profit YoY %] >= 0, "#2E8B57", "#D64545"))
+		displayFolder: 6 Formatting Helpers
+		lineageTag: 8beb62a2-acc4-50bb-bd24-2e042070c629
+
+	measure 'Profit YoY Label' =
+			IF(ISBLANK([Profit YoY %]), "—",
+			    IF([Profit YoY %] >= 0, "▲ ", "▼ ") & FORMAT(ABS([Profit YoY %]), "0.0%") & " vs PY")
+		displayFolder: 6 Formatting Helpers
+		lineageTag: c57545a0-c8e4-5477-b8b6-b58c1f105cab
+
+	measure 'Margin YoY Color' = IF(ISBLANK([Profit Margin YoY %]), "#6B7280", IF([Profit Margin YoY %] >= 0, "#2E8B57", "#D64545"))
+		displayFolder: 6 Formatting Helpers
+		lineageTag: 77b46424-4ad9-5546-8777-12b9f730468f
+
+	measure 'Margin YoY Label' =
+			IF(ISBLANK([Profit Margin YoY %]), "—",
+			    IF([Profit Margin YoY %] >= 0, "▲ ", "▼ ") & FORMAT(ABS([Profit Margin YoY %]), "0.0%") & " vs PY")
+		displayFolder: 6 Formatting Helpers
+		lineageTag: 709e46a1-9104-5c0c-98a2-543013bd58cc
+
+	measure 'Orders YoY Color' = IF(ISBLANK([Orders YoY %]), "#6B7280", IF([Orders YoY %] >= 0, "#2E8B57", "#D64545"))
+		displayFolder: 6 Formatting Helpers
+		lineageTag: 34f59025-0709-50c8-99aa-e6a2fae19ac3
+
+	measure 'Orders YoY Label' =
+			IF(ISBLANK([Orders YoY %]), "—",
+			    IF([Orders YoY %] >= 0, "▲ ", "▼ ") & FORMAT(ABS([Orders YoY %]), "0.0%") & " vs PY")
+		displayFolder: 6 Formatting Helpers
+		lineageTag: af795477-fcee-575f-b0dd-9ac729163541
+
+	measure 'AOV YoY Color' = IF(ISBLANK([Avg Order Value YoY %]), "#6B7280", IF([Avg Order Value YoY %] >= 0, "#2E8B57", "#D64545"))
+		displayFolder: 6 Formatting Helpers
+		lineageTag: ddb7b304-a3ae-5a7a-951d-f79676195bf1
+
+	measure 'AOV YoY Label' =
+			IF(ISBLANK([Avg Order Value YoY %]), "—",
+			    IF([Avg Order Value YoY %] >= 0, "▲ ", "▼ ") & FORMAT(ABS([Avg Order Value YoY %]), "0.0%") & " vs PY")
+		displayFolder: 6 Formatting Helpers
+		lineageTag: 8984e75e-c031-5136-8925-a58f216677cd
+
+	measure 'Customers YoY Color' = IF(ISBLANK([Customers YoY %]), "#6B7280", IF([Customers YoY %] >= 0, "#2E8B57", "#D64545"))
+		displayFolder: 6 Formatting Helpers
+		lineageTag: b0c62f47-ba90-5133-96b0-1afa56ff740b
+
+	measure 'Customers YoY Label' =
+			IF(ISBLANK([Customers YoY %]), "—",
+			    IF([Customers YoY %] >= 0, "▲ ", "▼ ") & FORMAT(ABS([Customers YoY %]), "0.0%") & " vs PY")
+		displayFolder: 6 Formatting Helpers
+		lineageTag: 127101e4-1998-58bf-83f8-2e2919233a97
+
+	column Dummy
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 72d593ea-dae7-5813-87f8-f68a69e9ecc7
+		summarizeBy: none
+		sourceColumn: Dummy
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = m
+		mode: import
+		source =
+				let
+					Source = #table(type table [Dummy = Int64.Type], {})
+				in
+					Source
+
+	annotation PBI_ResultType = Table
+

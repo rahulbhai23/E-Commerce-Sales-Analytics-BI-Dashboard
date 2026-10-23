@@ -1,0 +1,152 @@
+table fact_orders
+	lineageTag: a2942d53-dd9a-586c-a762-2001368a5beb
+
+	column order_id
+		dataType: string
+		lineageTag: f86c3692-de65-52da-abe2-3f7d8c56ea75
+		summarizeBy: none
+		sourceColumn: order_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_id
+		dataType: string
+		isHidden
+		lineageTag: 1066f2a2-d59a-511c-957a-528f413129fd
+		summarizeBy: none
+		sourceColumn: customer_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column order_date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 27403adb-526e-51ad-99e0-e0887ac2385c
+		summarizeBy: none
+		sourceColumn: order_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_days
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 89a1669c-9a38-57f3-a159-ea0f4cdfcda7
+		summarizeBy: none
+		sourceColumn: delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column estimated_delivery_days
+		dataType: double
+		formatString: #,0.00
+		lineageTag: f54fa3dc-10be-5dfd-8a93-b87f1c0a67a0
+		summarizeBy: none
+		sourceColumn: estimated_delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_rating
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 4f67f1ba-069d-5516-8dfd-cd604f4af6c4
+		summarizeBy: none
+		sourceColumn: customer_rating
+
+		annotation SummarizationSetBy = Automatic
+
+	column review_sentiment
+		dataType: string
+		lineageTag: b091dbd1-8079-57a0-8360-6ecc5a2144fc
+		summarizeBy: none
+		sourceColumn: review_sentiment
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_review
+		dataType: string
+		lineageTag: d1b707b4-4212-5ccb-9630-f2c583dcec45
+		summarizeBy: none
+		sourceColumn: customer_review
+
+		annotation SummarizationSetBy = Automatic
+
+	column loyalty_points_earned
+		dataType: int64
+		formatString: 0
+		lineageTag: 6939c2f7-61d1-5b98-8b28-8f27ff334133
+		summarizeBy: none
+		sourceColumn: loyalty_points_earned
+
+		annotation SummarizationSetBy = Automatic
+
+	column loyalty_points_redeemed
+		dataType: int64
+		formatString: 0
+		lineageTag: 586b3f87-5229-5f24-8a67-692058dc0268
+		summarizeBy: none
+		sourceColumn: loyalty_points_redeemed
+
+		annotation SummarizationSetBy = Automatic
+
+	column profit_margin_percentage
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 29abdb9f-7ed0-5f2e-a27e-f09c48f584b4
+		summarizeBy: none
+		sourceColumn: profit_margin_percentage
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_lifetime_value
+		dataType: double
+		formatString: #,0.00
+		lineageTag: d105f7b2-af11-561b-a580-0593cc9a9a92
+		summarizeBy: none
+		sourceColumn: customer_lifetime_value
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_repeat_customer
+		dataType: boolean
+		lineageTag: 1c9048b5-3fb9-5f20-bc0a-1c847044f881
+		summarizeBy: none
+		sourceColumn: is_repeat_customer
+
+		annotation SummarizationSetBy = Automatic
+
+	column customer_order_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 203c7a2c-3f35-5d50-9775-13ea2a10727b
+		summarizeBy: none
+		sourceColumn: customer_order_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column date_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3763b173-2fc5-52c6-b1c3-93346f127d2c
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_orders = m
+		mode: import
+		source =
+				let
+					Source = Csv.Document(File.Contents(DataFolder & "\fact_orders.csv"), [Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+					Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+					Typed = Table.TransformColumnTypes(Promoted, {{"order_id", type text}, {"customer_id", type text}, {"order_date", type date}, {"delivery_days", type number}, {"estimated_delivery_days", type number}, {"customer_rating", type number}, {"review_sentiment", type text}, {"customer_review", type text}, {"loyalty_points_earned", Int64.Type}, {"loyalty_points_redeemed", Int64.Type}, {"profit_margin_percentage", type number}, {"customer_lifetime_value", type number}, {"is_repeat_customer", type logical}, {"customer_order_count", Int64.Type}, {"date_key", Int64.Type}}, "en-US")
+				in
+					Typed
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
